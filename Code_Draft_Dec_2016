@@ -1,0 +1,75 @@
+import numpy as np
+#import pygal
+import matplotlib.pyplot as plt
+import pandas as pd
+
+def MakeRGB(a,b):
+
+  Illumdata = [[300, 400, 500, 600, 700, 800],[1, 2, 1, 3, 1, 1]]
+  Refdata=[[300, 400, 500, 600, 700, 800],[.1, .2, .1, .3, .1, .1]]
+  RGBColorFunctions = [[300, 400, 500, 600, 700, 800],[.13, .212, .12, .33, .31, .0], [0, .1, .85, .33, .48, .34], [.13, .2, .31, .3, .2, .3]]
+  Productdata = [[0],[0],[0],[0]]
+  Productdata[0] = Illumdata[0]
+  for n in range(1,4):
+    Productdata[n] = np.multiply(np.multiply(Illumdata[1],Refdata[1]),RGBColorFunctions[n])
+
+  Productdata = np.asarray(Productdata)
+  Illumdata = np.asarray(Illumdata)
+  Refdata = np.asarray(Refdata)
+
+  plt.plot(Illumdata[0], Illumdata[1], 'r--', Refdata[0], Refdata[1], 'b--', RGBColorFunctions[0], RGBColorFunctions[1], 'k--', RGBColorFunctions[0], RGBColorFunctions[2], 'y--',RGBColorFunctions[0], RGBColorFunctions[3], 'm--' ,Productdata[0],Productdata[1], 'k-',Productdata[0],Productdata[2], 'y-',Productdata[0],Productdata[3], 'm-')
+  plt.ylabel('some numbers')
+  plt.xlabel('wavelength (nm)')
+  plt.show()
+
+  return(Productdata);
+  
+def ImportIlluminant():
+  return I;
+
+def ImportReflection():
+  return R;
+
+def GenerateGaussianAbs():
+  return R;
+  
+def ImportRGBFunctions():
+  df=pd.read_csv('myfile.csv', sep=',',header=None)
+  df.values
+  return RGBfunc;
+
+def IntegrateRGB(RGBdata):
+  lRGB = [[],[],[]]
+  for n in range (1,4):
+    lRGB[n-1] = np.sum(RGBdata[n])*(RGBdata[0][1]-RGBdata[0][0])
+  return(lRGB);
+  
+def lRBGtosRGB(lRGB):
+  a = 0.055
+  sRGB = [0,0,0]
+  for n in range(0,3):
+    
+    if lRGB[n] <= 0.0031308:
+      sRGB[n] = 12.92*lRGB[n]
+    else:
+      sRGB[n] = np.power((1+a)*lRGB[n],(1/2.4))-a
+      
+  return(sRGB);
+ 
+def plotRGB(sRGB):
+  M = [[sRGB]]
+  plt.imshow(M)
+  plt.show()
+  return;
+  
+#Pdata = MakeRGB(1,2)
+RGBfuncs = ImportRGBFunctions;
+Pdata = [[300, 400, 500, 600, 700, 800],[.13, .212, .12, .33, .31, .0], [0, .1, .85, .33, .48, .34], [.13, .2, .31, .3, .2, .3]]
+#lRGB = IntegrateRGB(Pdata)
+#print(lRGB)
+#sRGB = lRBGtosRGB(lRGB)
+sRGB = lRBGtosRGB([1,.001,.001])
+
+print(sRGB)
+plotRGB(sRGB)
+#plotRGB([0, 0.5, 0])
